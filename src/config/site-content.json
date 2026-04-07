@@ -5,7 +5,7 @@
 		"username": "LLJ"
 	},
 	"theme": {
-		"colorBrand": "#de4331",
+		"colorBrand": "#CBD8FA",
 		"colorPrimary": "#4E3F42",
 		"colorSecondary": "#acadae",
 		"colorBrandSecondary": "#FCC841",
@@ -15,12 +15,11 @@
 		"colorArticle": "#6f6f6f33"
 	},
 	"backgroundColors": [
-		"#FCC841",
-		"#DFEFFC",
-		"#DEDE92",
-		"#DE4331",
-		"#FE9750",
-		"#FCC841"
+		"#631B42",
+		"#71AA12",
+		"#C4232D",
+		"#910E24",
+		"#F191C2"
 	],
 	"artImages": [
 		{
@@ -54,7 +53,7 @@
 		},
 		{
 			"id": "juejin",
-			"type": "juejin",
+			"type": "tg",
 			"value": "https://juejin.cn/user/2427311675422382",
 			"label": "稀土掘金",
 			"order": 2
@@ -62,7 +61,7 @@
 		{
 			"id": "email",
 			"type": "email",
-			"value": "yysuni1001@gmail.com",
+			"value": "15909186238@163.com",
 			"label": "",
 			"order": 1
 		}
