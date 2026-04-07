@@ -79,7 +79,7 @@
 		"order": 2,
 		"offsetX": null,
 		"offsetY": null,
-		"enabled": false
+		"enabled": true
 	},
 	"likePosition": {
 		"width": 54,
