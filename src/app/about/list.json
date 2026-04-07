@@ -1,5 +1,5 @@
 {
 	"title": "关于本站",
-	"description": "一个基于 Github 的现代化博客系统",
-	"content": "📦网站基于 Github 仓库完全存储，所有内容版本可控\n\n🚀无后端，无 serverless function，纯静态站点\n\n✏️文章通过可视化 UI 直接编辑并提交到 Github 仓库\n\n🔑所有用户都可以编辑，提交需要 Owner 的 Private Key\n\n## 技术栈\n\n- Next.js\n- React\n- TypeScript\n- Tailwind CSS\n- Motion\n- Github API"
+	"description": "欢迎光临！",
+	"content": "Hi，欢迎来到我的个人博客。这里是 LLJ。\n\n* 🎓 **Status:** 大一给排水\n* ⚙️ **Interests:** 机械 / AI / 开源项目\n* 💻 **Code Style:** Vibe Coder 🎧 \n\n热衷于用 vibe coding，把天马行空的想法变成能跑得通的 App 和小工具。\n\n建这个站，是为了记录折腾的过程，也是为了在广阔的互联网里留下一块属于自己的拼图。"
 }
