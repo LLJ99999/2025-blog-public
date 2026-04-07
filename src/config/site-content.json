@@ -48,15 +48,15 @@
 		{
 			"id": "github",
 			"type": "github",
-			"value": "https://github.com/LLJ99999",
+			"value": "https://github.com/yysuni",
 			"label": "Github",
 			"order": 3
 		},
 		{
 			"id": "juejin",
-			"type": "wechat",
-			"value": "15909186238",
-			"label": "WeChat",
+			"type": "juejin",
+			"value": "https://juejin.cn/user/2427311675422382",
+			"label": "稀土掘金",
 			"order": 2
 		},
 		{
