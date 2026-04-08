@@ -453,7 +453,7 @@ export default function BlogPage() {
 							href='https://github.com/LLJ99999'
 							target='_blank'
 							className='card text-secondary static inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs'>
-							<JuejinSVG className='h-4 w-4' />
+							<GithubSVG className='h-4 w-4' />
 							更多
 						</motion.a>
 					</div>
