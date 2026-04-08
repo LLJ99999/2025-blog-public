@@ -8,5 +8,15 @@
     "cover": "/blogs/先拿AI水一篇/ee7f2f7d56531ed4.webp",
     "hidden": false,
     "category": "代码实现"
+  },
+  {
+    "slug": "1st",
+    "title": "#我做了一个「KeyCast（键影）」：专治不能粘贴代码的在线系统",
+    "tags": [],
+    "date": "2026-04-08T09:41",
+    "summary": "先拿AI水一篇",
+    "cover": "/blogs/1st/ee7f2f7d56531ed4.webp",
+    "hidden": false,
+    "category": "代码实现"
   }
 ]
