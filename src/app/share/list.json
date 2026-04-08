@@ -1,1 +1,42 @@
-[]
+[
+	{
+		"name": "360压缩国际版",
+		"logo": "https://p2.ssl.qhimg.com/t110b9a9301b1eebb48d70c3324.webp",
+		"url": "https://www.360totalsecurity.com/zh-cn/360zip/",
+		"description": "个人感觉挺好用的，也不会捆绑360其他软件",
+		"tags": [
+			"工具"
+		],
+		"stars": 3
+	},
+	{
+		"name": "OpenSpeedy",
+		"logo": "https://private-user-images.githubusercontent.com/168624508/511732210-a82ceda2-9b7b-41e4-96dc-cd250c9bd3ff.jpg?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzU2NTMzOTQsIm5iZiI6MTc3NTY1MzA5NCwicGF0aCI6Ii8xNjg2MjQ1MDgvNTExNzMyMjEwLWE4MmNlZGEyLTliN2ItNDFlNC05NmRjLWNkMjUwYzliZDNmZi5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwNDA4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDQwOFQxMjU4MTRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hOGI3NTliYmU4Mzc1YzI1ODc4NTJlMjM4NjE3MGMwMWI5ZjMxMTkwNzdlZmM3MjUxNzA1OTE2NWQ5YTIyMTQxJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.JxcAvJbcfacSiaS7gMlw9Q0nAZ1Yiz9QeTEK073H3qg",
+		"url": "https://github.com/game1024/OpenSpeedy",
+		"description": "一个开源加速器，可以加速百度网盘（doge",
+		"tags": [
+			"工具"
+		],
+		"stars": 3
+	},
+	{
+		"name": "网易爆米花",
+		"logo": "https://i.imgs.ovh/2026/04/08/ZJaEXO.jpeg",
+		"url": "https://bmh.163.com/",
+		"description": "网易出品的一个免费播放器，可以挂载各类网盘，感觉挺好用的（win端超级难用）",
+		"tags": [
+			"影视"
+		],
+		"stars": 4
+	},
+	{
+		"name": "FlClash",
+		"logo": "https://i.imgs.ovh/2026/04/08/ZJaXXM.png",
+		"url": "https://github.com/chen08209/FlClash",
+		"description": "一个基于ClashMeta的多平台代理客户端，好用！",
+		"tags": [
+			"网络"
+		],
+		"stars": 3
+	}
+]
