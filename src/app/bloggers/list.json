@@ -118,5 +118,12 @@
 		"description": "群友，JAVAR，干净blog，让我看到几个人的影子。",
 		"stars": 3,
 		"status": "disconnected"
+	},
+	{
+		"name": "Zack的小屋",
+		"avatar": "blob:https://llj.best/c07ad567-7dad-4662-8166-f66d44f023fa",
+		"url": "https://xazack.top/",
+		"description": "技术大佬，爱好骑行，擅长Windows系统各类技术问题",
+		"stars": 5
 	}
 ]
