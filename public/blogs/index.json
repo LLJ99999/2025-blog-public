@@ -1,5 +1,14 @@
 [
   {
+    "slug": "hermes",
+    "title": "hermes",
+    "tags": [],
+    "date": "2026-04-08T10:03",
+    "summary": "111",
+    "hidden": false,
+    "category": ""
+  },
+  {
     "slug": "先拿AI水一篇",
     "title": "#我做了一个「KeyCast（键影）」：专治不能粘贴代码的在线系统",
     "tags": [],
