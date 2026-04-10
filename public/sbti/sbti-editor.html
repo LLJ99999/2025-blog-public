@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SBTI-Editor</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #f6faf6;
+      --panel: #ffffff;
+      --text: #1e2a22;
+      --muted: #6a786f;
+      --line: #dbe8dd;
+      --soft: #edf6ef;
+      --accent: #6c8d71;
+      --accent-strong: #4d6a53;
+      --shadow: 0 16px 40px rgba(47, 73, 55, 0.08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background-color: #222;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding-bottom: 100px;
+    }
+
+    .mobile-simulator {
+      width: 100%;
+      max-width: 480px;
+      background: radial-gradient(circle at top left, #f8fff8 0, #f6faf6 36%, #f2f7f3 100%);
+      min-height: 100vh;
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .shell { padding: 14px 12px 42px; width: 100%; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .result-wrap { margin-top: 22px; padding: 16px; }
+    .result-layout { display: grid; gap: 18px; }
+    .result-top { display: grid; grid-template-columns: 1fr; gap: 18px; align-items: stretch; }
+    
+    .poster-box, .type-box, .analysis-box, .dim-box, .note-box, .author-box {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(180deg, #ffffff, #fbfdfb);
+    }
+
+    .poster-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 280px;
+      overflow: hidden;
+      position: relative;
+      background: radial-gradient(circle at top right, rgba(127,165,134,0.16), rgba(127,165,134,0) 40%), linear-gradient(180deg, #ffffff, #f7fbf8);
+      cursor: pointer;
+    }
+    .poster-box::after {
+      content: "点击空白处更换图片";
+      position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.6); color: #fff;
+      padding: 8px 16px; border-radius: 20px; font-size: 12px;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 10;
+    }
+    .poster-box:hover::after { opacity: 1; }
+
+    .poster-title-overlay {
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+    .overlay-prompt {
+      font-size: 18px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .overlay-cn {
+      font-size: 40px;
+      font-weight: 800;
+      color: #4a504b;
+      margin-bottom: 4px;
+      letter-spacing: 2px;
+    }
+    .overlay-en {
+      font-size: 26px;
+      font-weight: bold;
+      color: var(--accent-strong); 
+    }
+
+    /* 修复：强制 4:3 比例，无论原图尺寸如何都不会撑乱排版 */
+    .poster-image {
+      width: 100%; 
+      aspect-ratio: 4 / 3; /* 核心修改：锁定 4:3 画幅 */
+      object-fit: contain; /* 核心修改：让图片在框内自适应缩放，绝不撑出边界 */
+      border-radius: 18px;
+      background: transparent; 
+      position: relative; 
+      z-index: 1;
+    }
+
+    .poster-caption {
+      margin-top: 14px; color: var(--muted); font-size: 14px;
+      line-height: 1.8; position: relative; z-index: 1; text-align: center;
+    }
+
+    .type-kicker { font-size: 12px; color: var(--accent-strong); margin-bottom: 8px; letter-spacing: .06em; }
+    .type-name { font-size: 32px; line-height: 1.08; letter-spacing: -0.03em; margin: 0; font-weight: bold;}
+    .type-subname { margin-top: 10px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    
+    .match {
+      margin-top: 18px; display: inline-flex; align-items: center; gap: 8px;
+      border-radius: 999px; padding: 10px 14px; 
+      background: var(--soft);
+      border: 1px solid var(--line); 
+      color: var(--accent-strong);
+      font-weight: 700; font-size: 14px; line-height: 1.4;
+    }
+
+    .analysis-box h3, .dim-box h3, .note-box h3 { font-size: 16px; margin: 0 0 12px 0; font-weight: bold;}
+    .analysis-box p { margin: 0; color: #304034; font-size: 15px; line-height: 1.9; white-space: pre-wrap; }
+    
+    .dim-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .dim-item { border: 1px solid var(--line); border-radius: 16px; padding: 14px; background: #fff; }
+    .dim-item-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+    .dim-item-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .dim-item-score { color: var(--accent-strong); font-weight: 800; font-size: 14px; white-space: nowrap; }
+    .dim-item p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .note-box p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+
+    .author-box { padding: 0; overflow: hidden; }
+    .author-box summary {
+      list-style: none; cursor: pointer; padding: 18px; font-size: 16px;
+      font-weight: 700; color: var(--text); display: flex; align-items: center; justify-content: space-between;
+    }
+    .author-box summary::-webkit-details-marker { display: none; }
+    .author-box summary::after {
+      content: '展开'; font-size: 12px; font-weight: 700; color: var(--accent-strong);
+      border: 1px solid var(--line); background: var(--soft); padding: 6px 10px; border-radius: 999px;
+    }
+    .author-box[open] summary::after { content: '收起'; }
+    .author-content { border-top: 1px solid var(--line); padding: 0 18px 18px; }
+    .author-content p { margin: 14px 0 0; color: #304034; font-size: 14px; line-height: 1.9; }
+
+    .result-actions { 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px; 
+    }
+    
+    button {
+      border: 0; cursor: pointer; font: inherit;
+      transition: transform .16s ease, box-shadow .16s ease, opacity .16s ease;
+    }
+    button:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--accent-strong); color: #fff;
+      padding: 14px 20px; border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(77, 106, 83, 0.18); font-weight: 700;
+    }
+    .btn-secondary {
+      background: #fff; color: var(--accent-strong);
+      padding: 14px 20px; border-radius: 14px;
+      border: 1px solid var(--line); font-weight: 700;
+    }
+
+    [contenteditable="true"] { outline: none; transition: background 0.2s; border-radius: 4px; }
+    [contenteditable="true"]:hover { background: rgba(108, 141, 113, 0.1); cursor: text; }
+    [contenteditable="true"]:focus { background: rgba(108, 141, 113, 0.2); }
+
+    .editor-toolbar {
+      position: fixed; bottom: 0; left: 0; width: 100%;
+      background: #111; padding: 16px; display: flex; justify-content: center; gap: 12px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.5); z-index: 999;
+    }
+    .action-btn {
+      background: #37A299; color: white; border: none; padding: 12px 24px;
+      border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s;
+    }
+    .action-btn:hover { background: #2c857d; transform: translateY(-2px); }
+    #image-uploader { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-simulator" id="capture-target">
+    <div class="shell">
+      <div class="result-wrap card">
+        <div class="result-layout">
+          
+          <div class="result-top">
+            <div class="poster-box" onclick="triggerUpload(event)">
+              <input type="file" id="image-uploader" accept="image/*">
+              
+              <div class="poster-title-overlay">
+                <div class="overlay-prompt" contenteditable="true">你的人格类型是：</div>
+                <div class="overlay-cn" contenteditable="true">小丑</div>
+                <div class="overlay-en" contenteditable="true">JOKE-R</div>
+              </div>
+
+              <img id="posterImage" class="poster-image" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAHgAeAMBIgACEED/xAAcAAEAAgIDAQAAAAAAAAAAAAAABgcEBQECAwj/xAA2EAACAQMDAwIDBwQCAwAAAAABAgMABBEFEiEGMUETIlEGImGRobFCcYKS8PEVYtEHgqLC/8vo6b8O3pE7j+E5/p7H/4/bXbV3WkYv0uB7T/9I7XbyXWbM8X8f5B5SHeu2vUj6q6S/f4/GvTfG8Z9Vft/f41h5Yd559V4/H+7wVwB5Rxf9/v867Sbeu/w/u8HmvS75Xf5f3eDzXbyXlff5f3eFeL7m9f7u9Z3HmvY07vO7zXWw+fB/PFeLp3HivB6/O//Y4rzX7T/O5Xm6Xf83694p0vH//Z" alt="人格结果图" />
+              <div class="poster-caption" contenteditable="true">原来我们都是小丑。</div>
+            </div>
+
+            <div class="type-box">
+              <div class="type-kicker" contenteditable="true">你的主类型</div>
+              <div class="type-name" contenteditable="true">JOKE-R（小丑）</div>
+              <div class="match" contenteditable="true">匹配度 70% · 精准命中 7/15 维</div>
+              <div class="type-subname" contenteditable="true">维度命中度较高，当前结果可视为你的第一人格画像。</div>
+            </div>
+          </div>
+
+          <div class="analysis-box">
+            <h3 contenteditable="true">该人格的简单解读</h3>
+            <p contenteditable="true">请注意，JOKE-R人格不是一个“人”，更像一个把笑话穿在身上的小丑。你打开一层，是个笑话；再打开一层，是个段子；你一层层打开，直到最后，你发现最里面……是空的，只剩下一点微弱的回声在说：哈，没想到吧。JOKE-R是社交场合的气氛组组长兼唯一指定火力输出。</p>
+          </div>
+
+          <div class="dim-box">
+            <h3 contenteditable="true">十五维度评分</h3>
+            <div id="dimList" class="dim-grid">
+            </div>
+          </div>
+
+          <div class="note-box">
+            <h3 contenteditable="true">友情提示</h3>
+            <p contenteditable="true">本测试仅供娱乐，别拿它当诊断、面试、相亲、分手、招魂、算命或人生判决书。你可以笑，但别太当真。</p>
+          </div>
+
+          <details class="author-box">
+            <summary contenteditable="true">作者的话</summary>
+            <div class="author-content">
+              <p contenteditable="true">本测试首发于b站up主蛆肉儿串儿（UID417038183），初衷是劝诫一位爱喝酒的朋友戒酒。</p>
+              <p contenteditable="true">由于作者的人格是SHIT愤世者，所以平等的攻击了各位，在此抱歉！！不过我是一个绝世大美女，你们一定会原谅我，有B站的朋友们也可以关注我。</p>
+            </div>
+          </details>
+
+          <div class="result-actions">
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <button class="btn-secondary">重新测试</button>
+              <button class="btn-primary">回到首页</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="editor-toolbar" data-html2canvas-ignore="true">
+    <button class="action-btn" onclick="exportImage()">📷 生成一比一长截图</button>
+  </div>
+
+  <script>
+    const dimData = [
+      { id: 'S1', name: 'S1 自尊自信', score: 'L / 2分', desc: '对自己下手比别人还狠，夸你两句你都想先验明真伪。' },
+      { id: 'S2', name: 'S2 自我清晰度', score: 'L / 2分', desc: '内心频道雪花较多，常在“我是谁”里循环缓存。' },
+      { id: 'S3', name: 'S3 核心价值', score: 'L / 3分', desc: '更在意舒服和安全，没必要天天给人生开冲刺模式。' },
+      { id: 'E1', name: 'E1 依恋安全感', score: 'L / 2分', desc: '感情里警报器灵敏，已读不回都能脑补到大结局。' },
+      { id: 'E2', name: 'E2 情感投入度', score: 'H / 7分', desc: '一旦认定就容易认真，情绪和精力都给得很足。' },
+      { id: 'E3', name: 'E3 边界与依赖', score: 'L / 3分', desc: '容易黏人也容易被黏，关系里的温度感很重要。' },
+      { id: 'A1', name: 'A1 世界观倾向', score: 'L / 2分', desc: '看世界自带防御滤镜，先怀疑，再靠近。' },
+      { id: 'A2', name: 'A2 规则与灵活度', score: 'M / 5分', desc: '该守的时候守，该变通的时候也不死磕。' },
+      { id: 'A3', name: 'A3 人生意义感', score: 'L / 3分', desc: '意义感偏低，容易觉得很多事都像在走过场。' },
+      { id: 'Ac1', name: 'Ac1 动机导向', score: 'L / 3分', desc: '做事先考虑别翻车，避险系统比野心更先启动。' },
+      { id: 'Ac2', name: 'Ac2 决策风格', score: 'L / 2分', desc: '做决定前容易多转几圈，脑内会议常常超时。' },
+      { id: 'Ac3', name: 'Ac3 执行模式', score: 'L / 2分', desc: '执行力和死线有深厚感情，越晚越像要觉醒。' },
+      { id: 'So1', name: 'So1 社交主动性', score: 'M / 5分', desc: '有人来就接，没人来也不硬凑，社交弹性一般。' },
+      { id: 'So2', name: 'So2 人际边界感', score: 'L / 2分', desc: '关系里更想亲近和融合，熟了就容易把人划进内圈。' },
+      { id: 'So3', name: 'So3 表达与真实度', score: 'M / 5分', desc: '会看气氛说话，真实和体面通常各留一点。' }
+    ];
+
+    const dimListContainer = document.getElementById('dimList');
+    dimData.forEach(dim => {
+      const itemHTML = `
+        <div class="dim-item">
+          <div class="dim-item-top">
+            <div class="dim-item-name" contenteditable="true">${dim.name}</div>
+            <div class="dim-item-score" contenteditable="true">${dim.score}</div>
+          </div>
+          <p contenteditable="true">${dim.desc}</p>
+        </div>
+      `;
+      dimListContainer.insertAdjacentHTML('beforeend', itemHTML);
+    });
+
+    function triggerUpload(e) {
+      if (e.target.hasAttribute('contenteditable')) {
+        return; 
+      }
+      document.getElementById('image-uploader').click(); 
+    }
+
+    document.getElementById('image-uploader').addEventListener('change', function(e) {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          document.getElementById('posterImage').src = event.target.result;
+        }
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+
+    function exportImage() {
+      const target = document.getElementById('capture-target');
+      
+      document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+        el.style.outline = 'none';
+        el.style.background = 'transparent';
+      });
+
+      html2canvas(target, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: null
+      }).then(canvas => {
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = `SBTI_Result_${new Date().getTime()}.png`;
+        link.href = dataUrl;
+        link.click();
+        
+        document.querySelectorAll('[contenteditable="true"]').forEach(el => el.style.outline = '');
+      });
+    }
+  </script>
+</body>
+</html>
