@@ -20,13 +20,17 @@
 
 不信纯靠脑力很难解？你可以直接在下方我手搓的**网页模拟器**中亲自试着破解一下：
 
-<iframe 
-  src="[https://llj.best/liangan](https://llj.best/liangan)" 
-  width="100%" 
-  height="600px" 
-  frameborder="0" 
-  style="border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); margin: 20px 0;">
-</iframe>
+<div align="center">
+  <iframe 
+    src="https://llj.best/liangan/index.html" 
+    width="100%" 
+    height="600" 
+    frameborder="0" 
+    scrolling="no"
+    style="border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); margin: 20px 0;">
+  </iframe>
+</div>
+
 
 ## 🧠 2. 状态空间与数学建模
 
