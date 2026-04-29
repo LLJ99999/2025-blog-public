@@ -1,5 +1,18 @@
 [
   {
+    "slug": "5th",
+    "title": "记录：我的机械臂项目开发经历",
+    "tags": [
+      "机械臂",
+      "robotarm",
+      "上位机"
+    ],
+    "date": "2026-04-29T16:20",
+    "summary": "",
+    "hidden": false,
+    "category": "开源"
+  },
+  {
     "slug": "liangan",
     "title": "从Steam解谜游戏《一路》谈起：如何用图论与BFS算法“降维打击”机械联动谜题",
     "tags": [],
