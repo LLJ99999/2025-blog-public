@@ -1,4 +1,4 @@
-# 最近学校的评教开始了，这学期课太多，懒得一个一个填，故写了个脚本，效果如视频
+# 最近学校的期末评教开始了，这学期课太多，懒得一个一个填，故写了个脚本，效果如视频
 
 <video src="https://llj-best.oss-cn-beijing.aliyuncs.com/lv_0_20260623153559.mp4" controls="controls" width="100%">
   您的浏览器不支持播放该视频。
@@ -21,3 +21,8 @@
 ### 3 打开教务系统
 
 * <a href="https://jwxt.bjwlxy.cn/eams/loginExt.action" target="_blank">教务系统</a>
+
+**面板在右下角** ~~*打开评教页面（忘记截图了）*~~
+![](/blogs/pingjiao/a97e522aa598ddd3.webp)
+**点击开始自动评教**
+![](/blogs/pingjiao/27da24f81a1ef094.webp)
