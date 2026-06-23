@@ -14,6 +14,8 @@
 * <a href="https://chromewebstore.google.com/detail/%E7%AF%A1%E6%94%B9%E7%8C%B4/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=zh-CN&utm_source=ext_sidebar" target="_blank">chrome 篡改猴</a>
 * <a href="https://addons.mozilla.org/zh-CN/firefox/addon/violentmonkey/" target="_blank">火狐 暴力猴</a>
 
+**ps:** ~~苹果电脑的话可以在App store里面搜Tampermonkey（篡改猴），但是safari对油猴脚本兼容性一般，最好还是下个edge浏览器然后装暴力猴~~（以防有小伙伴有需要）
+
 ### 2 安装评教脚本
 
 * <a href="https://llj.best/zidong_pingjiao/auto-evaluation.user.js" target="_blank">评教脚本</a>![](/blogs/pingjiao/829a9dd586adef92.webp)
