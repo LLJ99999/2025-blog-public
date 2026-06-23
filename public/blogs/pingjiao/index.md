@@ -7,3 +7,7 @@
 ### 安装评教脚本
 
 * <a href="https://llj.best/zidong_pingjiao/auto-evaluation.user.js" target="_blank">安装脚本</a>
+
+### 打开教务系统
+
+* <a href="https://jwxt.bjwlxy.cn/eams/loginExt.action" target="_blank">教务系统</a>
